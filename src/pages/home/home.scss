@@ -1,3 +1,59 @@
-page-home {
+.card-background-page {
 
+  margin-block-start: 1px;
+
+  ion-card {
+    position: relative;
+    margin: 0 !important;
+    width: 100%;
+  }
+
+  img {
+    max-width: 100%;
+    opacity: .8;
+  }
+
+  .game-image {
+    max-width: 100%;
+    width: 800px;
+    margin: auto;
+    margin-block-end: 1px;
+  }
+
+  .game-image::after {
+    display: block;
+    position: relative;
+    background-image: linear-gradient(to bottom, rgba(0,0,0,0) 0, #000 100%);
+    margin-top: -150px;
+    height: 150px;
+    width: 100%;
+    opacity: .8;
+    content: '';
+  }
+
+  .card-title {
+    position: absolute;
+    bottom: 10%;
+    font-size: 1.4em;
+    width: 100%;
+    font-weight: bold;
+    color: white;
+    padding: 20px;
+  }
+
+  .card-subtitle {
+    position: absolute;
+    bottom: 0%;
+    font-size: 1em;
+    width: 100%;
+    color: white;
+    padding: 20px;
+  }
+
+  button {
+    position: absolute;
+    z-index: 5;
+    bottom: 10%;
+    right: 5%;
+  }
 }
