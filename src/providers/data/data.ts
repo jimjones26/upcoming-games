@@ -27,4 +27,13 @@ export class DataProvider {
     return this.http.get(`/games/?fields=name,release_dates,screenshots&limit=${this.limit}&offset=${offset}&order=release_dates.date:desc&filter[genres][eq]=${genre_id}&filter[screenshots][exists]`, { headers });
   }
 
+  getFavorites(favIds) {
+    let favorites = favIds;
+    favorites = favorites.join();
+    const headers = this.httpHeaders;
+
+    return this.http.get(`/games/${favorites}?fields=name,release_dates,screenshots&order=release_dates.date:desc&filter[screenshots][exists]`, { headers });
+
+  }
+
 }

@@ -61,6 +61,36 @@ export class HomePage {
 
   }
 
+  openFavorites() {
+    this.storage.get('favorites')
+      .then((val) => {
+        this.genreName = 'Favorites';
+        if (val.length != 0) {
+          this._data.getFavorites(val)
+            .subscribe(res => this.games = res);
+        } else {
+          this.games.length = 0;
+        }
+      })
+  }
+
+  addFavorite(gameId) {
+    this.favorites.push(gameId);
+    this.favorites = this.favorites.filter(function (item, i, ar) {
+      return ar.indexOf(item) === i;
+    });
+    this.storage.set('favorites', this.favorites);
+    console.log('favs: ', this.favorites);
+  }
+
+  removeFavorite(gameId) {
+    this.favorites = this.favorites.filter(function(item) {
+      return item !== gameId;
+    });
+    this.storage.set('favorites', this.favorites);
+    console.log('favs: ', this.favorites);
+  }
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad HomePage');
   }
