@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, ModalController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { DataProvider } from '../../providers/data/data';
+import { GenresPage } from '../genres/genres';
 
 /**
  * Generated class for the HomePage page.
@@ -26,7 +27,8 @@ export class HomePage {
     public navParams: NavParams,
     private _data: DataProvider,
     private storage: Storage,
-    public loadingCtrl: LoadingController) {
+    public loadingCtrl: LoadingController,
+    public modalCtrl: ModalController) {
 
     let loading = this.loadingCtrl.create({
       content: 'Getting games...'
@@ -43,7 +45,7 @@ export class HomePage {
             this.storage.set('genre', this.genre);
           }
 
-          this._data.getGames('5', 0)
+          this._data.getGames(this.genre, 0)
             .subscribe(res => {
               this.games = res;
               loading.dismiss();
@@ -59,6 +61,30 @@ export class HomePage {
 
     });
 
+  }
+
+  openGenres() {
+    let genreModal = this.modalCtrl.create(GenresPage);
+    genreModal.onDidDismiss(genre => {
+      let loader = this.loadingCtrl.create({
+        content: 'Getting genres...'
+      });
+      if (genre) {
+        loader.present().then(() => {
+          this.storage.get('genre').then((val) => {
+            this.genre = val.id;
+            this.genreName = val.name;
+            this._data.getGames(this.genre, 0)
+              .subscribe(res => this.games = res);
+          })
+        });
+      }
+      setTimeout(() => {
+        loader.dismiss();
+      }, 1200);
+    });
+
+    genreModal.present();
   }
 
   openFavorites() {

@@ -36,4 +36,9 @@ export class DataProvider {
 
   }
 
+  getGenres() {
+    const headers = this.httpHeaders;
+    return this.http.get(`/genres/?fields=\*`, { headers });
+  }
+
 }
